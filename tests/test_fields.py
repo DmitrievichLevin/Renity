@@ -1,21 +1,20 @@
 """Burgos Field(s) Unit Test Module."""
 
 import pytest
+
 from src.Burgos import fields
-from src.Burgos.validators.interface import Validator
-from src.Burgos.validators.validators import (
-    RequiredField,
-    IncorrectFieldType,
-)
-from src.Burgos.constants import WIRE_TYPES, FIELDS
+from src.Burgos.constants import FIELDS
+from src.Burgos.constants import WIRE_TYPES
 from src.Burgos.utils import modulesubclasses
+from src.Burgos.validators.interface import Validator
+from src.Burgos.validators.validators import IncorrectFieldType
+from src.Burgos.validators.validators import RequiredField
 
 
 def fields_class_validators():
     """Get Validators Attribute From Field Subclasses."""
     return [
-        (k, v.validators)
-        for k, v in modulesubclasses(fields, fields.Field)
+        (k, v.validators) for k, v in modulesubclasses(fields, fields.Field)
     ]
 
 
@@ -80,9 +79,7 @@ def test_all_fields_used_in_test_dict(
 
         # Test invalid value
         with pytest.raises(TypeError):
-            test_field.validate(
-                invalid_dictionary_test_message_dict[name]
-            )
+            test_field.validate(invalid_dictionary_test_message_dict[name])
 
     # Test valid_test_dict_length == field_subclasses_length == invalid_test_dict_length
     assert (

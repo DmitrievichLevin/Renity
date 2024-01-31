@@ -1,26 +1,21 @@
 """Burgos Built-in Fields."""
 from __future__ import annotations
+
+from ..validators.exceptions import IncorrectMessageType
+from ..validators.validators import MessageTypeValidator
+from ..validators.validators import OverflowValidator
+from ..validators.validators import SubFieldValidator
+from .constants import BOOL
+from .constants import FIXED64
+from .constants import I64
+from .constants import INT32
+from .constants import LEN
+from .constants import PACKED
+from .constants import SINT32
+from .constants import STR
+from .constants import TYPE
+from .constants import VARINT
 from .interface import Field
-from ..validators.exceptions import (
-    IncorrectMessageType,
-)
-from .constants import (
-    VARINT,
-    I64,
-    LEN,
-    TYPE,
-    BOOL,
-    PACKED,
-    STR,
-    FIXED64,
-    INT32,
-    SINT32,
-)
-from ..validators.validators import (
-    OverflowValidator,
-    SubFieldValidator,
-    MessageTypeValidator,
-)
 
 
 class TypeField(Field):

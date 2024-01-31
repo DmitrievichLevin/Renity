@@ -1,8 +1,11 @@
 """Encoder Module."""
 
 from math import ceil
+
 from bitstring import Bits
-from ..constants import WIRE_TYPES, FIELDS
+
+from ..constants import FIELDS
+from ..constants import WIRE_TYPES
 
 
 class Encoder:
@@ -57,9 +60,7 @@ class Encoder:
                 _encoder = getattr(cls, wire)
 
                 # Encode field
-                record = _encoder(
-                    value, field, "{0:0b}".format(field.wire).zfill(3)
-                )
+                record = _encoder(value, field, f"{field.wire:0b}".zfill(3))
 
                 # message_type(Used for constructing messages does not have a bit)
                 # set and continue loop
@@ -73,11 +74,7 @@ class Encoder:
                 # Mark corresponding attribute bit
                 attributes += bit
 
-        return (
-            identifier
-            + "{0:0b}".format(attributes).zfill(8)
-            + "".join(records)
-        )
+        return identifier + f"{attributes:0b}".zfill(8) + "".join(records)
 
     def __getitem__(self, wire: str) -> dict:
         """Override.
@@ -114,7 +111,7 @@ class Encoder:
         Returns:
             (str): Binary String representation of integer.
         """
-        _bin = "{0:0b}".format(value)
+        _bin = f"{value:0b}"
         _len = len(_bin)
         _bytes = ceil(_len / 7)
         _b = []

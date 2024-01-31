@@ -1,13 +1,14 @@
 """Serializers."""
 
 from typing import Any
-from . import serializers
-from .interface import MessageSerializer as Serializer
+
 from ..fields.interface import Field
 from ..utils import modulesubclasses
+from . import serializers
+from .interface import MessageSerializer as Serializer
 
 
-class FieldElement(object):
+class FieldElement:
     """Serializer Field Object.
 
     Args:
@@ -63,8 +64,7 @@ class FieldElement(object):
 
         * Iterable Attributes.
         """
-        for val in [self.field, self.key, self.value, self.bit]:
-            yield val
+        yield from [self.field, self.key, self.value, self.bit]
 
 
 class Serializers:
@@ -119,9 +119,7 @@ class Serializers:
             "_fields", "_bits", "_length"
         )(self.message_cls)
 
-        message = (
-            self.message if isinstance(self.message, dict) else {}
-        )
+        message = self.message if isinstance(self.message, dict) else {}
 
         # Get type field
         type_field = FieldElement(
@@ -158,9 +156,7 @@ class Serializers:
         Serializer Chain
             * Class definitions of type <Serializer> from serializers module.
         """
-        for _, serializer in modulesubclasses(
-            serializers, Serializer
-        ):
+        for _, serializer in modulesubclasses(serializers, Serializer):
             self.add_link(serializer)
 
     def add_link(self, cls: Serializer):

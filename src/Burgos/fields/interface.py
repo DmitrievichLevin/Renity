@@ -3,14 +3,14 @@
 Instances of this class are used to define a message's schema.
 """
 from __future__ import annotations
+
 from typing import Any
+
 from ..validators.exceptions import MissingPrimitiveException
-from ..validators.validators import (
-    RequiredField,
-    IncorrectFieldType,
-    UnorderedValidator,
-    Validator,
-)
+from ..validators.validators import IncorrectFieldType
+from ..validators.validators import RequiredField
+from ..validators.validators import UnorderedValidator
+from ..validators.validators import Validator
 
 
 class FieldMeta(type):
@@ -139,9 +139,7 @@ class Field(metaclass=FieldMeta):
 
         self.__default = default
 
-    def __initialize_sub_fields(
-        self, sub_fields: (list, tuple)
-    ) -> None:
+    def __initialize_sub_fields(self, sub_fields: (list, tuple)) -> None:
         if self.data_type is not list and len(sub_fields):
             name = self.__class__.__name__
             raise TypeError(

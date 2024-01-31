@@ -1,8 +1,9 @@
 """Burgos Utils."""
 
-from typing import Any
+from inspect import getmembers
+from inspect import isclass
 from types import ModuleType
-from inspect import isclass, getmembers
+from typing import Any
 
 
 def is_class_wrapper(func):
@@ -37,7 +38,7 @@ def modulesubclasses(__module: ModuleType, _type: Any):
     return getmembers(__module, lambda cls: subclassonly(cls, _type))
 
 
-class Inventory(object):
+class Inventory:
     """Inventory Object.
 
     * Queue like dict object
@@ -80,5 +81,4 @@ class Inventory(object):
     def __iter__(self):
         """Return all values."""
         for _, val in self.__value.items():
-            for v in val["values"]:
-                yield v
+            yield from val["values"]

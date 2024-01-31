@@ -1,7 +1,9 @@
 """Message Interface."""
 
 from typing import Any
+
 from bitstring import BitStream
+
 from ..serializers import Serializers as Serializer
 from .interface import MessageMetaClass
 
@@ -61,8 +63,7 @@ class Message(metaclass=MessageMetaClass):
 
         * Yields key/value pair from message dict.
         """
-        for key, value in self.message.items():
-            yield (key, value)
+        yield from self.message.items()
 
     def __getitem__(self, __name: str) -> Any:
         """Dunder Override.

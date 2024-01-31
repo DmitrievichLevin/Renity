@@ -1,10 +1,11 @@
 """Pytest config."""
 
 import pytest
-from src.Burgos.utils import modulesubclasses
+
 from src.Burgos import fields
 from src.Burgos.messages.message import Message
 from src.Burgos.serializers import serializers
+from src.Burgos.utils import modulesubclasses
 
 
 @pytest.fixture(scope="session")
@@ -16,9 +17,7 @@ def field_classes():
 @pytest.fixture(scope="session")
 def serializer_classes():
     """All Field Subclasses."""
-    return modulesubclasses(
-        serializers, serializers.MessageSerializer
-    )
+    return modulesubclasses(serializers, serializers.MessageSerializer)
 
 
 @pytest.fixture(scope="session")

@@ -1,8 +1,8 @@
 """Message Serializer Sub-Classes."""
 
-from .interface import MessageSerializer
 from ..decoder import decoder as MessageDecoder
 from ..encoder import Encoder
+from .interface import MessageSerializer
 
 
 class DictionarySerializer(MessageSerializer):

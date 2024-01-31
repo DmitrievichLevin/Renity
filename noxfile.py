@@ -23,7 +23,7 @@ except ImportError:
 
 
 package = "Burgos"
-python_versions = ["3.10.13"]
+python_versions = ["3.10, 3.9, 3.8, 3.7"]
 nox.needs_version = ">= 2021.6.6"
 nox.options.sessions = (
     "pre-commit",
@@ -148,7 +148,9 @@ def safety(session: Session) -> None:
     """Scan dependencies for insecure packages."""
     requirements = session.poetry.export_requirements()
     session.install("safety")
-    session.run("safety", "check", "--full-report", f"--file={requirements}")
+    session.run(
+        "safety", "check", "--full-report", f"--file={requirements}"
+    )
 
 
 @session(python=python_versions)
@@ -204,7 +206,9 @@ def typeguard(session: Session) -> None:
     """Runtime type checking using Typeguard."""
     session.install(".")
     session.install("pytest", "typeguard", "pygments")
-    session.run("pytest", f"--typeguard-packages={package}", *session.posargs)
+    session.run(
+        "pytest", f"--typeguard-packages={package}", *session.posargs
+    )
 
 
 @session(python=python_versions)

@@ -1,8 +1,9 @@
 """Burgos Serializer(s) Unit Test Module."""
 import pytest
-from src.Burgos.utils import modulesubclasses
-from src.Burgos.serializers import Serializers
+
 from src.Burgos.messages.message import Message
+from src.Burgos.serializers import Serializers
+from src.Burgos.utils import modulesubclasses
 
 
 def test_serializer_subclasses(serializer_classes):
@@ -14,9 +15,7 @@ def test_serializer_subclasses(serializer_classes):
         assert serializer.data_type
 
 
-def test_serializer_responsibility_chain(
-    field_classes, serializer_classes
-):
+def test_serializer_responsibility_chain(field_classes, serializer_classes):
     """Serializer Chain.
 
     * Verify all subclasses are chained in Serializers instance.

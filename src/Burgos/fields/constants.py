@@ -18,9 +18,7 @@ MISSING_PRIMITIVE = 3017
 
 Wire Type Constants
 """
-VARINT = (
-    0  #: int32, int64, uint32, uint64, sint32, sint64, bool, enum
-)
+VARINT = 0  #: int32, int64, uint32, uint64, sint32, sint64, bool, enum
 I64 = 1  #: fixed64, sfixed64, double
 LEN = 2  #: string, bytes, embedded messages, packed repeated fields
 TYPE = 7  #: MESSAGE IDENTIFIER -> LEN: String

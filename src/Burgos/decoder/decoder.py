@@ -1,8 +1,12 @@
 """Decoder Module."""
 import codecs
+
 from bitstring import BitStream
+
+from ..constants import WIRE_MASK
+from ..constants import WIRE_TYPES
 from .exceptions import InvalidMessage
-from ..constants import WIRE_TYPES, WIRE_MASK
+
 
 """
 Static Module Message Decoder
@@ -166,9 +170,7 @@ def base_wrapper(base_func: callable):
         _bin_tag = bits.read(8)  # noqa: F841
 
         # Base Method Call
-        value, _length = base_func(
-            *args, data=bits, field=field, **kwargs
-        )
+        value, _length = base_func(*args, data=bits, field=field, **kwargs)
 
         # Return Value & Next Wire Method Call
         return value, advance()  # can add _length
@@ -402,9 +404,7 @@ def unpack(_length: int):
         bits.read(8)
 
         # Get value of primitive from wire function
-        value, pointer = globals()[f"base{wire}"](
-            bits[bits.pos :].bin, field
-        )
+        value, pointer = globals()[f"base{wire}"](bits[bits.pos :].bin, field)
 
         # Advance pointer to start of next value
         bits.read(pointer)
