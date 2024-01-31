@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "Burgos"
-version = "2.0.2"
+version = "2.0.3"
 description = "Burgos"
 authors = ["Jalin Howard <jhowar39@emich.edu>"]
 license = "MIT"
