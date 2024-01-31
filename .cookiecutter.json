@@ -1,0 +1,16 @@
+{
+  "_checkout": "2022.6.3",
+  "_output_dir": "/Users/dmitrievichlevin/Desktop/Repos/Burgos/Burgos",
+  "_repo_dir": "/Users/dmitrievichlevin/.cookiecutters/cookiecutter-hypermodern-python",
+  "_template": "gh:cjolowicz/cookiecutter-hypermodern-python",
+  "author": "Jalin Howard",
+  "copyright_year": "2024",
+  "development_status": "Development Status :: 4 - Beta",
+  "email": "jhowar39@emich.edu",
+  "friendly_name": "Burgos",
+  "github_user": "DmitrievichLevin",
+  "license": "MIT",
+  "package_name": "Burgos",
+  "project_name": "Burgos",
+  "version": "2.0.1"
+}
