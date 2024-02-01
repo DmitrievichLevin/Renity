@@ -17,14 +17,9 @@ classifiers = [
 Changelog = "https://github.com/DmitrievichLevin/Burgos/releases"
 
 [tool.poetry.dependencies]
-python = ">=3.7"
+python = "^3.7"
 click = ">=8.0.1"
 bitstring = ">=4.1.4"
-nox = "^2023.4.22"
-nox-poetry = "^1.0.3"
-flake8-docstrings = "^1.7.0"
-pydocstyle = "^6.3.0"
-flake8 = "^7.0.0"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"
