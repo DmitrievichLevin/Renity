@@ -3,8 +3,7 @@
 from inspect import getmembers
 from inspect import isclass
 from types import ModuleType
-from typing import Any
-from typing import Callable
+from typing import Any, Callable, Optional
 
 
 def is_class_wrapper(func: Callable) -> Callable:
@@ -60,7 +59,7 @@ class Inventory:
             return
         self.__value[key] = {"count": 1, "values": [value]}
 
-    def pop(self, key: str) -> Any | None:
+    def pop(self, key: str) -> Optional[Any]:
         """Remove item to inventory.
 
         * Pop value from key->list

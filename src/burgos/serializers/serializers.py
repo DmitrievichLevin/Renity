@@ -3,6 +3,7 @@
 from burgos.decoder import decoder as MessageDecoder
 from burgos.encoder.encoder import Encoder
 from burgos.serializers.interface import MessageSerializer
+from typing import Optional
 
 
 class DictionarySerializer(MessageSerializer):
@@ -13,7 +14,7 @@ class DictionarySerializer(MessageSerializer):
 
     data_type = dict
 
-    def serialize(self, message: dict | None = None) -> None:
+    def serialize(self, message: Optional[dict] = None) -> None:
         """Method Override."""
         self.message = message
         self.data = Encoder.encode(self.fields)

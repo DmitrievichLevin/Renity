@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from typing import Any
+from typing import Any, Optional
 from typing import Callable
 
 from burgos.serializers import serializers
-from burgos.serializers.interface import MessageSerializer as Serializer
+from burgos.serializers.interface import (
+    MessageSerializer as Serializer,
+)
 
 from ..utils import modulesubclasses
 
@@ -34,7 +36,7 @@ class FieldElement:
         field: Field,
         key: str,
         value: Any = None,
-        bit: int | None = None,
+        bit: Optional[int] = None,
     ):
         self.field = field
 
@@ -128,7 +130,9 @@ class Serializers:
         cls_bits = m_cls["_bits"]
         cls_length = m_cls["_length"]
 
-        message = self.message if isinstance(self.message, dict) else {}
+        message = (
+            self.message if isinstance(self.message, dict) else {}
+        )
 
         # Get type field
         type_field = FieldElement(
@@ -165,7 +169,9 @@ class Serializers:
         Serializer Chain
             * Class definitions of type <Serializer> from serializers module.
         """
-        for _, serializer in modulesubclasses(serializers, Serializer):
+        for _, serializer in modulesubclasses(
+            serializers, Serializer
+        ):
             self.add_link(serializer)
 
     def add_link(self, cls: type[Serializer]) -> None:

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC
-from typing import Any
+from typing import Any, Optional
 
 
 class MessageSerializer(ABC):
@@ -23,8 +23,8 @@ class MessageSerializer(ABC):
 
     _message: dict = {}
     fields: list = []
-    data: bytes | None = None
-    _next: MessageSerializer | None = None
+    data: Optional[bytes] = None
+    _next: Optional[MessageSerializer] = None
     length = 0
     message_length = 0
 
@@ -39,7 +39,7 @@ class MessageSerializer(ABC):
         ) from AttributeError
 
     @property
-    def message(self) -> dict | None:
+    def message(self) -> Optional[dict]:
         """Message getter."""
         return self._message
 
@@ -75,7 +75,7 @@ class MessageSerializer(ABC):
         self._message = new_message
 
     @property
-    def next(self) -> MessageSerializer | None:
+    def next(self) -> Optional[MessageSerializer]:
         """Next Serializer Node."""
         return self._next
 
