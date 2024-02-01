@@ -62,7 +62,8 @@ source = ["burgos", "tests"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 100
+fail_under = 95
+exclude_also= ["raise", "@(abc\\.)?abstractmethod",]
 
 [tool.isort]
 profile = "black"

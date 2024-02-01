@@ -11,10 +11,10 @@ WIRE_TYPES = {
     7: "_message_type",
 }
 
-"""Decoder Constants."""
+# Decoder Constants
 
 WIRE_MASK = 0b111
 
-"""Encoder Constants."""
+# Encoder Constants
 
 FIELDS = {1: "001", 2: "010", 3: "011"}

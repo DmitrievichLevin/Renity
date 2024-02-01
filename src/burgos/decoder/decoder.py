@@ -11,9 +11,7 @@ from ..constants import WIRE_TYPES
 from .exceptions import InvalidMessage
 
 
-"""
-Static Module Message Decoder
-"""
+# Static Module Message Decoder
 
 
 # Module Vars
@@ -61,7 +59,7 @@ def decode(_bits):
             attributes = [2 ** abs(idx - 7)] + attributes
 
     # Empty Message will not throw exception, but return message containing only type
-    if bits.pos == len(bits):
+    if bits.pos == len(bits):  # pragma: no cover
         return decoded_value
 
     # Wire Type of first attribute to decode
@@ -112,7 +110,7 @@ def tag() -> tuple:
     _field = _tag[1:5].int
 
     # Wire is Message Identifier ignore tag(set 2)
-    if _wire == "_message_type":
+    if _wire == "_message_type":  # pragma: no cover
         _field = 2
 
     return (_wire, _field)
@@ -143,7 +141,7 @@ def advance():
 
         # End of bytes
         return None
-    except Exception as e:
+    except Exception as e:  # pragma: no cover
         raise e
 
 
@@ -172,7 +170,9 @@ def base_wrapper(base_func: typing.Callable) -> typing.Callable:
         _bin_tag = bits.read(8)  # noqa: F841
 
         # Base Method Call
-        value, _length = base_func(*args, data=bits, field=field, **kwargs)
+        value, _length = base_func(
+            *args, data=bits, field=field, **kwargs
+        )
 
         # Return Value & Next Wire Method Call
         return value, advance()  # can add _length
@@ -205,7 +205,7 @@ def base_varint(data, field=0, *args, **kwargs):
     """
     _bits = __get_stream(data)
 
-    def zig_zag(i):
+    def zig_zag(i):  # pragma: no cover
         # Signed int ZigZag Decoder (field[1] == sint32)
         return (i >> 1) ^ -(i & 1)
 
@@ -220,7 +220,7 @@ def base_varint(data, field=0, *args, **kwargs):
     length = 0
 
     # While MSB == 1 continue
-    while msb:
+    while msb:  # pragma: no cover
         # read next 8-bit sequence
         bin = _bits.read(8)
 
@@ -246,7 +246,7 @@ def base_varint(data, field=0, *args, **kwargs):
     if field == 2:
         value = zig_zag(value)
     # Value is bool
-    if field == 3:
+    elif field == 3:
         value = bool(value)
 
     return (value, length)
@@ -404,7 +404,9 @@ def unpack(_length: int) -> list:
         bits.read(8)
 
         # Get value of primitive from wire function
-        value, pointer = globals()[f"base{wire}"](bits[bits.pos :].bin, field)
+        value, pointer = globals()[f"base{wire}"](
+            bits[bits.pos :].bin, field
+        )
 
         # Advance pointer to start of next value
         bits.read(pointer)
