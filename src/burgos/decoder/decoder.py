@@ -170,9 +170,7 @@ def base_wrapper(base_func: typing.Callable) -> typing.Callable:
         _bin_tag = bits.read(8)  # noqa: F841
 
         # Base Method Call
-        value, _length = base_func(
-            *args, data=bits, field=field, **kwargs
-        )
+        value, _length = base_func(*args, data=bits, field=field, **kwargs)
 
         # Return Value & Next Wire Method Call
         return value, advance()  # can add _length
@@ -404,9 +402,7 @@ def unpack(_length: int) -> list:
         bits.read(8)
 
         # Get value of primitive from wire function
-        value, pointer = globals()[f"base{wire}"](
-            bits[bits.pos :].bin, field
-        )
+        value, pointer = globals()[f"base{wire}"](bits[bits.pos :].bin, field)
 
         # Advance pointer to start of next value
         bits.read(pointer)

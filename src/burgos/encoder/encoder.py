@@ -62,9 +62,7 @@ class Encoder:
                 _encoder = getattr(cls, wire)
 
                 # Encode field
-                record = _encoder(
-                    value, field, f"{field.wire:0b}".zfill(3)
-                )
+                record = _encoder(value, field, f"{field.wire:0b}".zfill(3))
 
                 # message_type(Used for constructing messages does not have a bit)
                 # set and continue loop
@@ -79,9 +77,7 @@ class Encoder:
                 attributes += bit
 
         result: bytes = BitStream(
-            bin=identifier
-            + f"{attributes:0b}".zfill(8)
-            + "".join(records)
+            bin=identifier + f"{attributes:0b}".zfill(8) + "".join(records)
         ).bytes
         return result
 
@@ -194,9 +190,7 @@ class Encoder:
         return result
 
     @classmethod
-    def _string(
-        cls, value: str, _: Any = None, wire: str = "010"
-    ) -> str:
+    def _string(cls, value: str, _: Any = None, wire: str = "010") -> str:
         """LEN: String.
 
         Args:
@@ -219,9 +213,7 @@ class Encoder:
         return _tag + _length + _bits
 
     @classmethod
-    def _packed(
-        cls, values: list, field: ListField, __: Any = None
-    ) -> str:
+    def _packed(cls, values: list, field: ListField, __: Any = None) -> str:
         """Packed value(list).
 
         Args:
