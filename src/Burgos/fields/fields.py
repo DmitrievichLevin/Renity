@@ -1,6 +1,6 @@
 """Burgos Built-in Fields."""
-from __future__ import annotations
 
+from __future__ import annotations
 from ..validators.exceptions import IncorrectMessageType
 from ..validators.validators import MessageTypeValidator
 from ..validators.validators import OverflowValidator
@@ -29,6 +29,7 @@ class TypeField(Field):
     data_type = str
 
     def validate(self, value):
+        """Explicit Built-in Field Validation."""
         validator = MessageTypeValidator(field=self, data_type=str)
         return validator.verify(value)
 
