@@ -19,7 +19,7 @@ packages = [
 Changelog = "https://github.com/DmitrievichLevin/Burgos/releases"
 
 [tool.poetry.dependencies]
-python = "3.10.13"
+python = "3.10"
 click = ">=8.0.1"
 bitstring = "4.1.4"
 nox = "^2023.4.22"
