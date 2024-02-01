@@ -12,9 +12,7 @@ def test_serializer_subclasses(serializer_classes):
         assert serializer.data_type
 
 
-def test_serializer_responsibility_chain(
-    field_classes, serializer_classes
-):
+def test_serializer_responsibility_chain(field_classes, serializer_classes):
     """Serializer Chain.
 
     * Verify all subclasses are chained in Serializers instance.

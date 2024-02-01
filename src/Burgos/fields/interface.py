@@ -2,6 +2,7 @@
 
 Instances of this class are used to define a message's schema.
 """
+
 from __future__ import annotations
 
 from typing import Any

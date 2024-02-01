@@ -1,4 +1,5 @@
 """Decoder Module."""
+
 import codecs
 
 from bitstring import BitStream

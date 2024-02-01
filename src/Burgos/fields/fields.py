@@ -1,6 +1,7 @@
 """Burgos Built-in Fields."""
 
 from __future__ import annotations
+
 from ..validators.exceptions import IncorrectMessageType
 from ..validators.validators import MessageTypeValidator
 from ..validators.validators import OverflowValidator

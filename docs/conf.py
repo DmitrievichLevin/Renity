@@ -1,4 +1,5 @@
 """Sphinx configuration."""
+
 project = "Burgos"
 author = "Jalin Howard"
 copyright = "2024, Jalin Howard"

@@ -1,4 +1,5 @@
 """Nox sessions."""
+
 import os
 import shlex
 import shutil
@@ -148,9 +149,7 @@ def safety(session: Session) -> None:
     """Scan dependencies for insecure packages."""
     requirements = session.poetry.export_requirements()
     session.install("safety")
-    session.run(
-        "safety", "check", "--full-report", f"--file={requirements}"
-    )
+    session.run("safety", "check", "--full-report", f"--file={requirements}")
 
 
 @session(python=python_versions)
@@ -206,9 +205,7 @@ def typeguard(session: Session) -> None:
     """Runtime type checking using Typeguard."""
     session.install(".")
     session.install("pytest", "typeguard", "pygments")
-    session.run(
-        "pytest", f"--typeguard-packages={package}", *session.posargs
-    )
+    session.run("pytest", f"--typeguard-packages={package}", *session.posargs)
 
 
 @session(python=python_versions)

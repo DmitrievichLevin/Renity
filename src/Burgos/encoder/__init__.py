@@ -1,4 +1,5 @@
 """Encoder Package."""
+
 from .encoder import Encoder
 
 

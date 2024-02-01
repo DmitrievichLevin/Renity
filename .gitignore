@@ -8,5 +8,3 @@
 /docs/_build/
 /src/*.egg-info/
 __pycache__/
-.vscode/
-.Burgos.code-workspace

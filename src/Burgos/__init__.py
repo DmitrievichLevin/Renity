@@ -27,6 +27,7 @@ Example:
     Output:
         {"hello": "World", "sentence": ["Number of Apples:", 2]}
 """
+
 from .decoder import decoder as MessageDecoder
 from .encoder.encoder import Encoder
 from .fields.fields import BoolField

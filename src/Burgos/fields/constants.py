@@ -2,6 +2,7 @@
 
 Field Exception codes.
 """
+
 INVALID_MESSAGE = 3101
 
 REQUIRED_MESSAGE_FIELD = 3013
