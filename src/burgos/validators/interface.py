@@ -39,7 +39,7 @@ class Validator(metaclass=ValidatorInterface):
     Validation chaining is implemented within this base class.
     """
 
-    _next: typing.Optional[Validator] = None
+    _next: Validator | None = None
 
     def __init__(self, field: Field, data_type: tuple | type) -> None:
         self._field = field

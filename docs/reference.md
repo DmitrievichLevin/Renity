@@ -3,6 +3,6 @@
 ## Burgos
 
 ```{eval-rst}
-.. automodule:: Burgos
+.. automodule:: burgos
    :members:
 ```

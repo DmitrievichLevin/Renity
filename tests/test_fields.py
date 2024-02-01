@@ -1,7 +1,9 @@
 """Burgos Field(s) Unit Test Module."""
 
-import pytest
 from typing import Optional
+
+import pytest
+
 from burgos.constants import FIELDS
 from burgos.constants import WIRE_TYPES
 from burgos.fields import fields
@@ -14,9 +16,7 @@ from burgos.validators.validators import RequiredField
 
 def fields_class_validators():
     """Get Validators Attribute From Field Subclasses."""
-    return [
-        (k, v.validators) for k, v in modulesubclasses(fields, Field)
-    ]
+    return [(k, v.validators) for k, v in modulesubclasses(fields, Field)]
 
 
 def test_field_wires(field_classes):
@@ -79,9 +79,7 @@ def test_all_fields_used_in_test_dict(
 
         # Test invalid value
         with pytest.raises(TypeError):
-            test_field.validate(
-                invalid_dictionary_test_message_dict[name]
-            )
+            test_field.validate(invalid_dictionary_test_message_dict[name])
 
     # Test valid_test_dict_length == field_subclasses_length == invalid_test_dict_length
     assert (
@@ -106,9 +104,7 @@ def test_non_list_data_type_field_sub_fields():
 
 def test_field_required_default_validators():
     """Test Required Default Validator Chain in Field."""
-    pointer: Optional[Validator] = fields.IntField(
-        required=True
-    ).validator
+    pointer: Optional[Validator] = fields.IntField(required=True).validator
     defaults = [Validator, RequiredField, IncorrectFieldType]
 
     for validator in defaults:

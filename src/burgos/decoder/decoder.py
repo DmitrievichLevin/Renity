@@ -172,9 +172,7 @@ def base_wrapper(base_func: typing.Callable) -> typing.Callable:
         _bin_tag = bits.read(8)  # noqa: F841
 
         # Base Method Call
-        value, _length = base_func(
-            *args, data=bits, field=field, **kwargs
-        )
+        value, _length = base_func(*args, data=bits, field=field, **kwargs)
 
         # Return Value & Next Wire Method Call
         return value, advance()  # can add _length
@@ -338,18 +336,16 @@ def base_len(data, field, *args, **kwargs):
     # Advance pointer past Length
     _bits.read(_int_len)
 
-    match field:
-        case 1:
-            # LEN: Packed - Unpack List
-            value: typing.Any = unpack(length * 8)
-        case 2:
-            # LEN: String decode utf-8 String
-            value = _bits.read(length * 8)
+    if field == 1:
+        # LEN: Packed - Unpack List
+        value: typing.Any = unpack(length * 8)
+    elif field == 2:
+        # LEN: String decode utf-8 String
+        value = _bits.read(length * 8)
 
-            value = codecs.decode(value.bytes, "utf-8")
-
-        case _:
-            raise AttributeError("LEN: Field does not exist.")
+        value = codecs.decode(value.bytes, "utf-8")
+    else:
+        raise AttributeError("LEN: Field does not exist.")
 
     return value, (length * 8) + _int_len + 8
 
@@ -407,9 +403,7 @@ def unpack(_length: int) -> list:
         bits.read(8)
 
         # Get value of primitive from wire function
-        value, pointer = globals()[f"base{wire}"](
-            bits[bits.pos :].bin, field
-        )
+        value, pointer = globals()[f"base{wire}"](bits[bits.pos :].bin, field)
 
         # Advance pointer to start of next value
         bits.read(pointer)

@@ -1,9 +1,10 @@
 """Message Serializer Sub-Classes."""
 
+from typing import Optional
+
 from burgos.decoder import decoder as MessageDecoder
 from burgos.encoder.encoder import Encoder
 from burgos.serializers.interface import MessageSerializer
-from typing import Optional
 
 
 class DictionarySerializer(MessageSerializer):
