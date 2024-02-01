@@ -1,9 +1,13 @@
 """Validator Interface."""
 
 from __future__ import annotations
-
+import typing
 from abc import ABCMeta
 from abc import abstractmethod
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from burgos.fields.interface import Field
 
 
 class ValidatorInterface(ABCMeta):
@@ -22,7 +26,7 @@ class ValidatorInterface(ABCMeta):
         pass
 
     @abstractmethod
-    def verify(cls, *args) -> None:
+    def verify(cls, *args: list) -> None:
         """Verify Field."""
         pass
 
@@ -33,9 +37,9 @@ class Validator(metaclass=ValidatorInterface):
     Validation chaining is implemented within this base class.
     """
 
-    _next: Validator = None
+    _next: Validator | None = None
 
-    def __init__(self, field, data_type):
+    def __init__(self, field: Field, data_type: tuple | type) -> None:
         self._field = field
         self._data_type = data_type
 
@@ -50,11 +54,11 @@ class Validator(metaclass=ValidatorInterface):
         )
 
     @property
-    def add(self) -> callable:
+    def add(self) -> typing.Callable:
         """Prevent accidental override."""
         return self.__add
 
-    def __add(self, validator: Validator) -> None:
+    def __add(self, validator: type[Validator]) -> None:
         """Add Validator.
 
         Args:
@@ -67,7 +71,7 @@ class Validator(metaclass=ValidatorInterface):
             pointer = pointer._next
         pointer._next = link
 
-    def verify(self, request) -> bool:
+    def verify(self, request: typing.Any) -> bool:
         """Verify Field."""
         if self._next:
             return self._next.verify(request)

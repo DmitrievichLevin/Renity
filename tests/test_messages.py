@@ -41,7 +41,7 @@ def test_byte_serializer(
     ) == len(valid_dictionary_test_message_dict)
 
 
-# from src.Burgos import (
+# from Burgos import (
 #     Message,
 #     StringField,
 #     IntField,

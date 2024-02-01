@@ -1,7 +1,7 @@
 # Usage
 
 ```{eval-rst}
-.. click:: Burgos.__main__:main
-    :prog: Burgos
+.. click:: burgos.__main__:main
+    :prog: burgos-lib
     :nested: full
 ```

@@ -64,7 +64,7 @@ that contain fields and methods to serlialze/parse to and from raw bytes.
 You can install _Burgos_ via [pip] from [PyPI]:
 
 ```console
-$ pip install Burgos
+$ pip install burgos
 ```
 
 ## Usage

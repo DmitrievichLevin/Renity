@@ -3,9 +3,8 @@
 from typing import Any
 
 from bitstring import BitStream
-
-from ..serializers import Serializers as Serializer
-from .interface import MessageMetaClass
+from burgos.messages.interface import MessageMetaClass
+from burgos.serializers import Serializers as Serializer
 
 
 class Message(metaclass=MessageMetaClass):
@@ -18,7 +17,8 @@ class Message(metaclass=MessageMetaClass):
     __slots__ = ["_message", "data", "type", "serializer"]
     # prevent pytest from trying to discover tests in the class
     __test__ = False
-    required = False
+    required: bool = False
+    _length: int = 0
 
     def __init__(self, message: Any = None) -> None:
         self.message = message
@@ -35,7 +35,7 @@ class Message(metaclass=MessageMetaClass):
         self._message = _message
         self.data = data
 
-    def __serialize(self, message) -> tuple:
+    def __serialize(self, message: Any) -> tuple:
         """Serialize Message.
 
         * Instantiate Serializer Chain on instance.
@@ -74,4 +74,4 @@ class Message(metaclass=MessageMetaClass):
 
     def __bytes__(self):
         """Bytes Representation Override."""
-        return BitStream(bin=self.data).bytes
+        return BitStream(bytes=self.data).bytes

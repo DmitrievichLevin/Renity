@@ -1,5 +1,5 @@
 """Message Serializer Interface."""
-
+from __future__ import annotations
 from abc import ABC
 from typing import Any
 
@@ -19,14 +19,15 @@ class MessageSerializer(ABC):
         next(MessageSerializer): next node in Serializer Chain.
     """
 
-    _message = None
-    fields = None
-    data = None
-    _next = None
+    _message: dict = {}
+    fields: list = []
+    data: bytes | None = None
+    _next: MessageSerializer | None = None
     length = 0
+    message_length = 0
 
     @property
-    def data_type(self):
+    def data_type(self) -> type[Any]:
         """Abstract Data Type Property.
 
         * Force sub-classes implementation to include "data_type" attribute.
@@ -36,7 +37,7 @@ class MessageSerializer(ABC):
         ) from AttributeError
 
     @property
-    def message(self) -> dict:
+    def message(self) -> dict | None:
         """Message getter."""
         return self._message
 
@@ -72,15 +73,15 @@ class MessageSerializer(ABC):
         self._message = new_message
 
     @property
-    def next(self):
+    def next(self) -> MessageSerializer | None:
         """Next Serializer Node."""
         return self._next
 
     @next.setter
-    def next(self, _next_node):
+    def next(self, _next_node: Any) -> None:
         self._next = _next_node
 
-    def serialize(data: Any) -> str:
+    def serialize(self, data: Any) -> None:
         """Serialize Method.
 
         * Must be overriden
@@ -90,7 +91,7 @@ class MessageSerializer(ABC):
         """
         raise NotImplementedError
 
-    def load(self, data: Any) -> (dict, Any):
+    def load(self, data: Any) -> tuple:
         """Validate Message Processing.
 
         * Validate/Serialize Data or pass to next serializer for processing.
@@ -104,14 +105,15 @@ class MessageSerializer(ABC):
         Raises:
             Exception: TypeError data-type serializer does not exist.
         """
-        pointer = self
+        pointer: MessageSerializer = self
 
         if isinstance(data, self.data_type):
             self.serialize(data)
             return self.message, self.data
 
         if pointer.next:
-            return pointer.next.load(data)
+            next: tuple = pointer.next.load(data)
+            return next
         else:
             raise Exception(
                 f"Serializer does not exist for type {type(data)}"

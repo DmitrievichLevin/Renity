@@ -1,9 +1,10 @@
 """Encoder Module."""
 
 from math import ceil
-
-from bitstring import Bits
-
+import typing
+from typing import Any
+from bitstring import Bits, BitStream
+from burgos.fields.interface import Field
 from ..constants import FIELDS
 from ..constants import WIRE_TYPES
 
@@ -27,7 +28,7 @@ class Encoder:
         pass
 
     @classmethod
-    def encode(cls, _fields) -> str:
+    def encode(cls, _fields: list) -> bytes:
         """Encode Message.
 
         Args:
@@ -60,7 +61,9 @@ class Encoder:
                 _encoder = getattr(cls, wire)
 
                 # Encode field
-                record = _encoder(value, field, f"{field.wire:0b}".zfill(3))
+                record = _encoder(
+                    value, field, f"{field.wire:0b}".zfill(3)
+                )
 
                 # message_type(Used for constructing messages does not have a bit)
                 # set and continue loop
@@ -74,9 +77,14 @@ class Encoder:
                 # Mark corresponding attribute bit
                 attributes += bit
 
-        return identifier + f"{attributes:0b}".zfill(8) + "".join(records)
+        result: bytes = BitStream(
+            bin=identifier
+            + f"{attributes:0b}".zfill(8)
+            + "".join(records)
+        ).bytes
+        return result
 
-    def __getitem__(self, wire: str) -> dict:
+    def __getitem__(self, wire: str) -> Any:
         """Override.
 
         - Makes class instance subscriptable.
@@ -85,7 +93,9 @@ class Encoder:
         return self.__getattribute__(wire)
 
     @classmethod
-    def _bool(cls, _value: bool, _=None, __=None):
+    def _bool(
+        cls, _value: bool, _: typing.Any = None, __: typing.Any = None
+    ) -> str:
         """Boolean Protocol.
 
         Args:
@@ -102,7 +112,7 @@ class Encoder:
         return tag + value
 
     @classmethod
-    def varint(cls, value, __=None):
+    def varint(cls, value: int, *args: list[typing.Any]) -> str:
         """Encode Variable Int.
 
         Args:
@@ -124,7 +134,7 @@ class Encoder:
         return "".join(_b)
 
     @classmethod
-    def _sint32(cls, _value, _=None, __=None):
+    def _sint32(cls, _value: int, *args: list[Any]) -> str:
         """Encode Signed Variable Int.
 
         Args:
@@ -140,7 +150,7 @@ class Encoder:
         return _bits
 
     @classmethod
-    def _int32(cls, value, _=None, __=None):
+    def _int32(cls, value: int, *args: list[Any]) -> str:
         """Encode Variable Int.
 
         Args:
@@ -154,15 +164,19 @@ class Encoder:
         return _bits
 
     @classmethod
-    def fixed64(cls, value, _=None, __=None):
+    def fixed64(cls, value: float, *args: list[typing.Any]) -> str:
         """64bit Float."""
         # Encode 64-bit Float value
         _bits = Bits(float=value, length=64)
+
         # Return Binary Protocol Message From TLV + 64-bit Float
-        return "1" + f"{FIELDS[1]}001".zfill(7) + _bits.bin
+        result: str = "1" + f"{FIELDS[1]}001".zfill(7) + _bits.bin
+        return result
 
     @classmethod
-    def _string(cls, value, _=None, wire="010"):
+    def _string(
+        cls, value: str, _: Any = None, wire: str = "010"
+    ) -> str:
         """LEN: String.
 
         Args:
@@ -185,7 +199,9 @@ class Encoder:
         return _tag + _length + _bits
 
     @classmethod
-    def _packed(cls, values, field, __=None):
+    def _packed(
+        cls, values: list, field: Field, __: Any = None
+    ) -> str:
         """Packed value(list).
 
         Args:

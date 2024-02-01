@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "Burgos"
+name = "burgos"
 version = "2.0.3"
 description = "Burgos"
 authors = ["Jalin Howard <jhowar39@emich.edu>"]
@@ -11,9 +11,7 @@ documentation = "https://Burgos.readthedocs.io"
 classifiers = [
     "Development Status :: 4 - Beta",
 ]
-packages = [
-    { include = "src/**/*.py" },
-]
+
 
 [tool.poetry.urls]
 Changelog = "https://github.com/DmitrievichLevin/Burgos/releases"
@@ -21,7 +19,7 @@ Changelog = "https://github.com/DmitrievichLevin/Burgos/releases"
 [tool.poetry.dependencies]
 python = "3.10"
 click = ">=8.0.1"
-bitstring = "4.1.4"
+bitstring = ">=4.1.4"
 nox = "^2023.4.22"
 nox-poetry = "^1.0.3"
 flake8-docstrings = "^1.7.0"
@@ -55,7 +53,7 @@ xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
 
 [tool.poetry.scripts]
-Burgos = "Burgos.__main__:main"
+burgos-lib = "burgos.__main__:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
@@ -63,7 +61,7 @@ tests = ["tests", "*/tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["Burgos", "tests"]
+source = ["burgos", "tests"]
 
 [tool.coverage.report]
 show_missing = true
@@ -81,6 +79,9 @@ pretty = true
 show_column_numbers = true
 show_error_codes = true
 show_error_context = true
+
+[[tool.mypy.overrides]]
+allow_redefinition = true
 
 [tool.black]
 line-length = 80

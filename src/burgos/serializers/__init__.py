@@ -1,11 +1,17 @@
 """Serializers."""
 
-from typing import Any
-
-from ..fields.interface import Field
+from __future__ import annotations
+from typing import Any, Callable
+from typing import TYPE_CHECKING
 from ..utils import modulesubclasses
-from . import serializers
-from .interface import MessageSerializer as Serializer
+from burgos.serializers import serializers
+from burgos.serializers.interface import (
+    MessageSerializer as Serializer,
+)
+
+if TYPE_CHECKING:
+    from burgos.fields.interface import Field
+    from burgos.messages.message import Message
 
 
 class FieldElement:
@@ -18,14 +24,14 @@ class FieldElement:
         bit(int): starting bit of field.
     """
 
-    __slots__ = ["field", "key", "_value", "bit"]
+    __slots__ = ["field", "key", "_value", "bit", "_message"]
 
     def __init__(
         self,
         field: Field,
         key: str,
         value: Any = None,
-        bit: int = None,
+        bit: int | None = None,
     ):
         self.field = field
 
@@ -52,7 +58,7 @@ class FieldElement:
         # Set value
         self._value = val if val is not None else self.field.default
 
-    def __getitem__(self, __name: (str, int)) -> Any:
+    def __getitem__(self, __name: Any[str, int]) -> Any:
         """Dunder Override.
 
         * Enable Message object subscription.
@@ -81,9 +87,10 @@ class Serializers:
         message_cls: <Message> sub-class instance.
     """
 
-    message_cls = None
-    serializers = None
-    fields = []
+    message_cls: Message
+    _message: dict
+    fields: list = []
+    serializers: Serializer
 
     def __init__(self):
         # Chain Serializers
@@ -113,13 +120,15 @@ class Serializers:
             fields(list)<dict>:
                 { bit(int), key(str), field(Field) }
         """
-        from operator import itemgetter
 
-        cls_fields, cls_bits, cls_length = itemgetter(
-            "_fields", "_bits", "_length"
-        )(self.message_cls)
+        m_cls = self.message_cls
+        cls_fields = m_cls["_fields"]
+        cls_bits = m_cls["_bits"]
+        cls_length = m_cls["_length"]
 
-        message = self.message if isinstance(self.message, dict) else {}
+        message = (
+            self.message if isinstance(self.message, dict) else {}
+        )
 
         # Get type field
         type_field = FieldElement(
@@ -150,16 +159,18 @@ class Serializers:
 
             self.fields.append(element)
 
-    def chain(self):
+    def chain(self) -> None:
         """Chain of Responsibility.
 
         Serializer Chain
             * Class definitions of type <Serializer> from serializers module.
         """
-        for _, serializer in modulesubclasses(serializers, Serializer):
+        for _, serializer in modulesubclasses(
+            serializers, Serializer
+        ):
             self.add_link(serializer)
 
-    def add_link(self, cls: Serializer):
+    def add_link(self, cls: type[Serializer]) -> None:
         """Add Chain Link.
 
         * Set field(attr)
@@ -170,14 +181,14 @@ class Serializers:
         Args:
             cls (Serializer): Next serializer in Linked List.
         """
-        serializer = cls
+        serializer: type[Serializer] = cls
         serializer.fields = [list(field) for field in self.fields]
 
         # Defined Fields + built-in 'type' field
         serializer.message_length = self.message_cls._length + 1
 
-        if not self.serializers:
-            self.serializers = serializer()
+        if not hasattr(self, "serializers"):
+            self.serializers: Serializer = serializer()
         else:
             pointer = self.serializers
 
@@ -190,11 +201,11 @@ class Serializers:
 
         * Add Updated Fields to chain.
         """
-        pointer = self.serializers
+        pointer: Serializer = self.serializers
         fields = [list(field) for field in self.fields]
         while pointer.next:
             pointer.fields = fields
-            pointer = pointer.next
+            pointer: Callable = pointer.next
         pointer.fields = fields
 
     def run(self) -> tuple:

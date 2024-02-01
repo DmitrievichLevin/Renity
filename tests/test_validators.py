@@ -2,16 +2,16 @@
 
 import pytest
 
-from src.Burgos.fields.fields import FloatField
-from src.Burgos.fields.fields import IntField
-from src.Burgos.fields.fields import ListField
-from src.Burgos.validators.validators import IncorrectFieldType
-from src.Burgos.validators.validators import OverflowValidator
-from src.Burgos.validators.validators import RequiredField
-from src.Burgos.validators.validators import RequiredMessageField
-from src.Burgos.validators.validators import SubFieldValidator
-from src.Burgos.validators.validators import TooManyValues
-from src.Burgos.validators.validators import UnorderedValidator
+from burgos.fields.fields import FloatField
+from burgos.fields.fields import IntField
+from burgos.fields.fields import ListField
+from burgos.validators.exceptions import RequiredMessageField
+from burgos.validators.exceptions import TooManyValues
+from burgos.validators.validators import IncorrectFieldType
+from burgos.validators.validators import OverflowValidator
+from burgos.validators.validators import RequiredField
+from burgos.validators.validators import SubFieldValidator
+from burgos.validators.validators import UnorderedValidator
 
 
 subjects = [IntField(), IntField(default=12)]
@@ -58,10 +58,10 @@ def test_subfield_validator():
     invalid = ListField(*subjects, str)
     empty = ListField()
 
-    overflow = OverflowValidator(valid)
-    valid = SubFieldValidator(valid)
-    invalid = SubFieldValidator(invalid)
-    empty = SubFieldValidator(empty)
+    overflow: OverflowValidator = OverflowValidator(valid)
+    valid: SubFieldValidator = SubFieldValidator(valid)
+    invalid: SubFieldValidator = SubFieldValidator(invalid)
+    empty: SubFieldValidator = SubFieldValidator(empty)
 
     # Valid <ListField> did not pass Subfield Validation.
     assert valid.verify([]) is True
@@ -99,6 +99,6 @@ def test_list_order_validators():
     assert unordered.validate([3.14, 2])
 
     # Unsorted <ListField> did not raise TypeError
-    unordered = UnorderedValidator(unordered)
+    unordered_validator = UnorderedValidator(unordered)
     with pytest.raises(TypeError):
-        unordered.verify([3.14, 2, 99])
+        unordered_validator.verify([3.14, 2, 99])

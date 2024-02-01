@@ -5,13 +5,13 @@ Instances of this class are used to define a message's schema.
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Type
 
 from ..validators.exceptions import MissingPrimitiveException
 from ..validators.validators import IncorrectFieldType
 from ..validators.validators import RequiredField
 from ..validators.validators import UnorderedValidator
-from ..validators.validators import Validator
+from ..validators.interface import Validator
 
 
 class FieldMeta(type):
@@ -21,6 +21,9 @@ class FieldMeta(type):
 
     * Creates validation chain from 'validators' attribute
     """
+
+    __field: Any = None
+    field: Any = None
 
     def __new__(cls, name, bases, attrs):
         """Create new Field instance.
@@ -93,16 +96,16 @@ class Field(metaclass=FieldMeta):
         subclasses **Warning: False(Experimental)**
     """
 
-    data_type = Any
-    validators = []
-    field = None
-    __value = None
+    data_type: Any = None
+    validators: list = []
+    field: int | tuple[int, int] = 0
+    __value: Any = None
     key = ""
-    message_cls = "Message"
+    message_cls: str = "Message"
 
     def __init__(
         cls,
-        *sub_fields,
+        *sub_fields: Any,
         required: bool = False,
         default: Any = None,
         sorted: bool = True,
@@ -140,7 +143,9 @@ class Field(metaclass=FieldMeta):
 
         self.__default = default
 
-    def __initialize_sub_fields(self, sub_fields: (list, tuple)) -> None:
+    def __initialize_sub_fields(
+        self, sub_fields: list | tuple
+    ) -> None:
         if self.data_type is not list and len(sub_fields):
             name = self.__class__.__name__
             raise TypeError(
@@ -155,7 +160,7 @@ class Field(metaclass=FieldMeta):
         return self.__chain_validation()
 
     def __chain_validation(self) -> None:
-        root = self.validator
+        root: Validator = self.validator
 
         # RequiredField = built-in Validator
         if self.required:

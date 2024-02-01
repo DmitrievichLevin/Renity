@@ -1,8 +1,8 @@
 """Decoder Module."""
 
 import codecs
-
-from bitstring import BitStream
+import typing
+from bitstring import BitStream, Bits
 
 from ..constants import WIRE_MASK
 from ..constants import WIRE_TYPES
@@ -15,12 +15,11 @@ Static Module Message Decoder
 
 
 # Module Vars
-bits = None
-decoded_bytes = None
-length = None
-attributes = None
-decoded_value = None
-start_wire = None
+bits: BitStream = BitStream()
+decoded_bytes: dict = dict()
+length: int = 0
+attributes: list = []
+decoded_value: dict = dict()
 # Module Vars
 
 
@@ -31,9 +30,9 @@ def decode(_bits):
     global length
     global attributes
     global decoded_value
+
     # Message Start
     # Assert Message begins with 'Message Type(int): 7'
-    global message_type
     bits = BitStream(bytes=_bits)
     decoded_bytes = bits.bytes
     length = len(bits) - 1
@@ -93,7 +92,7 @@ def bytes(_bits):
     return decoded_bytes
 
 
-def tag():
+def tag() -> tuple:
     """Message Attribute TLV.
 
     Returns:
@@ -152,7 +151,7 @@ def next_attr():
     return attributes.pop(0)
 
 
-def base_wrapper(base_func: callable):
+def base_wrapper(base_func: typing.Callable) -> typing.Callable:
     """Deserialization Base Method Wrapper.
 
     Args:
@@ -179,7 +178,7 @@ def base_wrapper(base_func: callable):
     return wrapper
 
 
-def __get_stream(data: (BitStream, str)):
+def __get_stream(data: BitStream | str) -> BitStream:
     if isinstance(data, BitStream):
         _bits = data
     else:
@@ -210,7 +209,7 @@ def base_varint(data, field=0, *args, **kwargs):
 
     # Initialize Bit stream from bits arg
 
-    value = None
+    value: Bits | BitStream = BitStream()
 
     # Initialize Most important bit
     msb = 1
@@ -230,7 +229,7 @@ def base_varint(data, field=0, *args, **kwargs):
         bin = bin[1:]
 
         # Convert sequence to big-endian
-        value = bin + value if value else bin
+        value = bin + value if value.any(0) or value.any(1) else bin
 
         # Add 8-bits to length
         length += 8
@@ -334,12 +333,11 @@ def base_len(data, field, *args, **kwargs):
 
     # Advance pointer past Length
     _bits.read(_int_len)
-    value = None
 
     match field:
         case 1:
             # LEN: Packed - Unpack List
-            value = unpack(length * 8)
+            value: typing.Any = unpack(length * 8)
         case 2:
             # LEN: String decode utf-8 String
             value = _bits.read(length * 8)
@@ -369,7 +367,7 @@ def _len(*args, **kwargs):
     return base_len(*args, **kwargs)
 
 
-def unpack(_length: int):
+def unpack(_length: int) -> list:
     """LEN: PACKED.
 
     * Packed list of Primitives.

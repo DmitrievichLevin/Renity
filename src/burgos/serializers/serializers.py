@@ -1,8 +1,8 @@
 """Message Serializer Sub-Classes."""
-
-from ..decoder import decoder as MessageDecoder
-from ..encoder import Encoder
-from .interface import MessageSerializer
+from typing import Any
+from burgos.decoder import decoder as MessageDecoder
+from burgos.encoder.encoder import Encoder
+from burgos.serializers.interface import MessageSerializer
 
 
 class DictionarySerializer(MessageSerializer):
@@ -13,7 +13,7 @@ class DictionarySerializer(MessageSerializer):
 
     data_type = dict
 
-    def serialize(self, message: dict = None):
+    def serialize(self, message: dict | None = None) -> None:
         """Method Override."""
         self.message = message
         self.data = Encoder.encode(self.fields)
@@ -27,7 +27,7 @@ class ByteSerializer(MessageSerializer):
 
     data_type = bytes
 
-    def serialize(self, data) -> str:
+    def serialize(self, data: bytes) -> None:
         """Method Override."""
         self.data = data
         # Decode message bytes -> dict

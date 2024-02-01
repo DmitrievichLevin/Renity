@@ -1,6 +1,6 @@
 """Burgos Serializer(s) Unit Test Module."""
 
-from src.Burgos.messages.message import Message
+from burgos.messages.message import Message
 
 
 def test_serializer_subclasses(serializer_classes):

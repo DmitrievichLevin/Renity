@@ -2,20 +2,19 @@
 
 import pytest
 
-from src.Burgos import fields
-from src.Burgos.constants import FIELDS
-from src.Burgos.constants import WIRE_TYPES
-from src.Burgos.utils import modulesubclasses
-from src.Burgos.validators.interface import Validator
-from src.Burgos.validators.validators import IncorrectFieldType
-from src.Burgos.validators.validators import RequiredField
+from burgos.constants import FIELDS
+from burgos.constants import WIRE_TYPES
+from burgos.fields import fields
+from burgos.fields.interface import Field
+from burgos.utils import modulesubclasses
+from burgos.validators.interface import Validator
+from burgos.validators.validators import IncorrectFieldType
+from burgos.validators.validators import RequiredField
 
 
 def fields_class_validators():
     """Get Validators Attribute From Field Subclasses."""
-    return [
-        (k, v.validators) for k, v in modulesubclasses(fields, fields.Field)
-    ]
+    return [(k, v.validators) for k, v in modulesubclasses(fields, Field)]
 
 
 def test_field_wires(field_classes):
@@ -52,7 +51,7 @@ def test_all_fields_used_in_test_dict(
         "ListField": [True, 3.14, 144, "Hello World"],
         "FloatField": 3.14,
         "StringField": "Hello World",
-        "type": "Message",
+        "type": "TestMessage",
     }
 
     def sub_fields(_type):
@@ -103,7 +102,7 @@ def test_non_list_data_type_field_sub_fields():
 
 def test_field_required_default_validators():
     """Test Required Default Validator Chain in Field."""
-    pointer = fields.IntField(required=True).validator
+    pointer: Validator | None = fields.IntField(required=True).validator
     defaults = [Validator, RequiredField, IncorrectFieldType]
 
     for validator in defaults:

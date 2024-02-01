@@ -10,4 +10,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main(prog_name="Burgos")  # pragma: no cover
+    main(prog_name="burgos-lib")  # pragma: no cover
