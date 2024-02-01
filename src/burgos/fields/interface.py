@@ -5,7 +5,8 @@ Instances of this class are used to define a message's schema.
 
 from __future__ import annotations
 
-from typing import Any, Optional, Union
+from typing import Any
+from typing import Union
 
 from ..validators.exceptions import MissingPrimitiveException
 from ..validators.interface import Validator
@@ -143,9 +144,7 @@ class Field(metaclass=FieldMeta):
 
         self.__default = default
 
-    def __initialize_sub_fields(
-        self, sub_fields: Union[list, tuple]
-    ) -> None:
+    def __initialize_sub_fields(self, sub_fields: Union[list, tuple]) -> None:
         if self.data_type is not list and len(sub_fields):
             name = self.__class__.__name__
             raise TypeError(

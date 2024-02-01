@@ -6,6 +6,7 @@ from types import ModuleType
 from typing import Any
 from typing import Callable
 from typing import Optional
+from typing import Type
 
 
 def is_class_wrapper(func: Callable) -> Callable:
@@ -20,7 +21,7 @@ def is_class_wrapper(func: Callable) -> Callable:
 
 
 @is_class_wrapper
-def subclassonly(cls: type[Any], _type: type) -> bool:
+def subclassonly(cls: Type[Any], _type: type) -> bool:
     """Return whether 'cls' is derived from another class but is not the same class."""
     if issubclass(cls, _type) and not issubclass(_type, cls):
         return True

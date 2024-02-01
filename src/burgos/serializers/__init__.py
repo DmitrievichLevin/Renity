@@ -2,22 +2,18 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
 from typing import Any
 from typing import Callable
 from typing import Optional
+from typing import Type
 
+from typeguard import typechecked
+
+import burgos
 from burgos.serializers import serializers
-from burgos.serializers.interface import (
-    MessageSerializer as Serializer,
-)
+from burgos.serializers.interface import MessageSerializer as Serializer
 
 from ..utils import modulesubclasses
-
-
-if TYPE_CHECKING:
-    from burgos.fields.interface import Field
-    from burgos.messages.message import Message
 
 
 class FieldElement:
@@ -32,9 +28,10 @@ class FieldElement:
 
     __slots__ = ["field", "key", "_value", "bit", "_message"]
 
+    @typechecked
     def __init__(
         self,
-        field: Field,
+        field: burgos.fields.interface.Field,
         key: str,
         value: Any = None,
         bit: Optional[int] = None,
@@ -79,6 +76,7 @@ class FieldElement:
         yield from [self.field, self.key, self.value, self.bit]
 
 
+@typechecked
 class Serializers:
     """Serializer Chain.
 
@@ -93,7 +91,7 @@ class Serializers:
         message_cls: <Message> sub-class instance.
     """
 
-    message_cls: Message
+    message_cls: burgos.messages.message.Message
     _message: dict
     fields: list = []
     serializers: Serializer
@@ -131,9 +129,7 @@ class Serializers:
         cls_bits = m_cls["_bits"]
         cls_length = m_cls["_length"]
 
-        message = (
-            self.message if isinstance(self.message, dict) else {}
-        )
+        message = self.message if isinstance(self.message, dict) else {}
 
         # Get type field
         type_field = FieldElement(
@@ -170,12 +166,10 @@ class Serializers:
         Serializer Chain
             * Class definitions of type <Serializer> from serializers module.
         """
-        for _, serializer in modulesubclasses(
-            serializers, Serializer
-        ):
+        for _, serializer in modulesubclasses(serializers, Serializer):
             self.add_link(serializer)
 
-    def add_link(self, cls: type[Serializer]) -> None:
+    def add_link(self, cls: Type[Serializer]) -> None:
         """Add Chain Link.
 
         * Set field(attr)
@@ -186,7 +180,7 @@ class Serializers:
         Args:
             cls (Serializer): Next serializer in Linked List.
         """
-        serializer: type[Serializer] = cls
+        serializer: Type[Serializer] = cls
         serializer.fields = [list(field) for field in self.fields]
 
         # Defined Fields + built-in 'type' field
@@ -210,7 +204,7 @@ class Serializers:
         fields = [list(field) for field in self.fields]
         while pointer.next:
             pointer.fields = fields
-            pointer: Callable = pointer.next
+            pointer: Optional[Callable] = pointer.next
         pointer.fields = fields
 
     def run(self) -> tuple:

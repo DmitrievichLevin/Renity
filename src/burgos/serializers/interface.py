@@ -5,6 +5,7 @@ from __future__ import annotations
 from abc import ABC
 from typing import Any
 from typing import Optional
+from typing import Type
 
 
 class MessageSerializer(ABC):
@@ -30,7 +31,7 @@ class MessageSerializer(ABC):
     message_length = 0
 
     @property
-    def data_type(self) -> type[Any]:
+    def data_type(self) -> Type[Any]:
         """Abstract Data Type Property.
 
         * Force sub-classes implementation to include "data_type" attribute.

@@ -112,7 +112,11 @@ class Encoder:
         return tag + value
 
     @classmethod
-    def varint(cls, value: int, *args: list[typing.Any]) -> str:
+    def varint(
+        cls,
+        value: int,
+        *args: typing.Any,
+    ) -> str:
         """Encode Variable Int.
 
         Args:
@@ -135,7 +139,11 @@ class Encoder:
         return "".join(_b)
 
     @classmethod
-    def _sint32(cls, _value: int, *args: list[Any]) -> str:
+    def _sint32(
+        cls,
+        _value: int,
+        *args: typing.Any,
+    ) -> str:
         """Encode Signed Variable Int.
 
         Args:
@@ -152,7 +160,11 @@ class Encoder:
         return _bits
 
     @classmethod
-    def _int32(cls, value: int, *args: list[Any]) -> str:
+    def _int32(
+        cls,
+        value: int,
+        *args: typing.Any,
+    ) -> str:
         """Encode Variable Int.
 
         Args:
@@ -167,7 +179,11 @@ class Encoder:
         return _bits
 
     @classmethod
-    def fixed64(cls, value: float, *args: list[typing.Any]) -> str:
+    def fixed64(
+        cls,
+        value: float,
+        *args: typing.Any,
+    ) -> str:
         """64bit Float."""
         # Encode 64-bit Float value
         _bits = Bits(float=value, length=64)

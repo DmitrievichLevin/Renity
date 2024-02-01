@@ -5,11 +5,7 @@ from __future__ import annotations
 import typing
 from abc import ABCMeta
 from abc import abstractmethod
-from typing import TYPE_CHECKING
-
-
-if TYPE_CHECKING:
-    from burgos.fields.interface import Field
+from typing import Type
 
 
 class ValidatorInterface(ABCMeta):
@@ -42,7 +38,7 @@ class Validator(metaclass=ValidatorInterface):
     _next: typing.Optional[Validator] = None
 
     def __init__(
-        self, field: Field, data_type: typing.Union[tuple, type]
+        self, field: typing.Any, data_type: typing.Union[tuple, type]
     ) -> None:
         self._field = field
         self._data_type = data_type
@@ -62,7 +58,7 @@ class Validator(metaclass=ValidatorInterface):
         """Prevent accidental override."""
         return self.__add
 
-    def __add(self, validator: type[Validator]) -> None:
+    def __add(self, validator: Type[Validator]) -> None:
         """Add Validator.
 
         Args:

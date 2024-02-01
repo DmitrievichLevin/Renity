@@ -1,5 +1,4 @@
 """Message Interface Meta Module."""
-
 from burgos.fields.fields import TypeField
 from burgos.fields.interface import Field
 
@@ -56,14 +55,16 @@ class MessageMetaClass(type):
         return super().__new__(cls, name, bases, attrs)
 
     @classmethod
-    def strict(cls, key: str, field: type[Field]) -> None:
+    def strict(cls, key: str, field: Field) -> None:
         """Strict Message Schema.
 
         * Check Required True(flag all fields required=True)
         * Set key
         """
         if key == "type":
-            raise TypeError("Attempted to overwrite protected field 'type'.")
+            raise TypeError(
+                "Attempted to overwrite protected field 'type'."
+            )
         field.key = key
         if cls._all_required:
             field.required = True

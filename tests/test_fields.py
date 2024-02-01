@@ -1,5 +1,6 @@
 """Burgos Field(s) Unit Test Module."""
 
+from typing import Any
 from typing import Optional
 
 import pytest
@@ -12,6 +13,12 @@ from burgos.utils import modulesubclasses
 from burgos.validators.interface import Validator
 from burgos.validators.validators import IncorrectFieldType
 from burgos.validators.validators import RequiredField
+
+
+@pytest.fixture
+def field_classes() -> Any:
+    """All Field Subclasses."""
+    return modulesubclasses(fields, Field)
 
 
 def fields_class_validators():

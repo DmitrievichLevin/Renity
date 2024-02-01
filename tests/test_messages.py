@@ -1,6 +1,38 @@
 """Burgos Message(s) Unit Tests Module."""
 
+from typing import Type
+
 import pytest
+
+from burgos.fields import fields
+from burgos.messages.message import Message
+
+
+class TestMessage(Message):
+    """Test Message Subclass."""
+
+    required = True
+    BoolField = fields.BoolField()
+    FloatField = fields.FloatField()
+    IntField = fields.IntField()
+    ListField = fields.ListField(
+        fields.BoolField(),
+        fields.FloatField(),
+        fields.IntField(),
+        fields.StringField(),
+    )
+    StringField = fields.StringField()
+
+
+@pytest.fixture
+def test_message_all_fields() -> Type[TestMessage]:
+    """Test Message Subclass.
+
+    * contains all valid fields see fields.py
+    * required=True(all field attributes are set to required).
+    * Note: TypeField is not a valid field attribute(auto-added by base class).
+    """
+    return TestMessage
 
 
 def test_dict_serializer(

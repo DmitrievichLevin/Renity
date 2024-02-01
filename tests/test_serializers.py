@@ -1,6 +1,27 @@
 """Burgos Serializer(s) Unit Test Module."""
 
+from typing import Any
+
+import pytest
+
+from burgos.fields import fields
+from burgos.fields.interface import Field
 from burgos.messages.message import Message
+from burgos.serializers import serializers
+from burgos.serializers.interface import MessageSerializer
+from burgos.utils import modulesubclasses
+
+
+@pytest.fixture
+def serializer_classes() -> Any:
+    """All Field Subclasses."""
+    return modulesubclasses(serializers, MessageSerializer)
+
+
+@pytest.fixture
+def field_classes() -> Any:
+    """All Field Subclasses."""
+    return modulesubclasses(fields, Field)
 
 
 def test_serializer_subclasses(serializer_classes):

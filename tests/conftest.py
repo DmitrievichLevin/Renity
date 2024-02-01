@@ -1,54 +1,6 @@
 """Pytest config."""
 
-from typing import Any
-
 import pytest
-
-from burgos.fields import fields
-from burgos.fields.interface import Field
-from burgos.messages.message import Message
-from burgos.serializers import serializers
-from burgos.serializers.interface import MessageSerializer
-from burgos.utils import modulesubclasses
-
-
-@pytest.fixture(scope="session")
-def field_classes() -> Any:
-    """All Field Subclasses."""
-    return modulesubclasses(fields, Field)
-
-
-@pytest.fixture(scope="session")
-def serializer_classes() -> Any:
-    """All Field Subclasses."""
-    return modulesubclasses(serializers, MessageSerializer)
-
-
-class TestMessage(Message):
-    """Test Message Subclass."""
-
-    required = True
-    BoolField = fields.BoolField()
-    FloatField = fields.FloatField()
-    IntField = fields.IntField()
-    ListField = fields.ListField(
-        fields.BoolField(),
-        fields.FloatField(),
-        fields.IntField(),
-        fields.StringField(),
-    )
-    StringField = fields.StringField()
-
-
-@pytest.fixture(scope="session")
-def test_message_all_fields() -> type[TestMessage]:
-    """Test Message Subclass.
-
-    * contains all valid fields see fields.py
-    * required=True(all field attributes are set to required).
-    * Note: TypeField is not a valid field attribute(auto-added by base class).
-    """
-    return TestMessage
 
 
 @pytest.fixture(scope="session")
