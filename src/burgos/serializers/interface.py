@@ -1,5 +1,7 @@
 """Message Serializer Interface."""
+
 from __future__ import annotations
+
 from abc import ABC
 from typing import Any
 
@@ -100,7 +102,7 @@ class MessageSerializer(ABC):
             data(Any): Data to serialize
 
         Returns:
-            None: Non-Pure function(mutates <Message> sub-class).
+            (tuple): message, bytes.
 
         Raises:
             Exception: TypeError data-type serializer does not exist.

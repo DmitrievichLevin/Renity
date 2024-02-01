@@ -2,7 +2,9 @@
 
 import codecs
 import typing
-from bitstring import BitStream, Bits
+
+from bitstring import Bits
+from bitstring import BitStream
 
 from ..constants import WIRE_MASK
 from ..constants import WIRE_TYPES

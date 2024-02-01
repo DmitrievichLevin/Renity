@@ -3,6 +3,7 @@
 from typing import Any
 
 from bitstring import BitStream
+
 from burgos.messages.interface import MessageMetaClass
 from burgos.serializers import Serializers as Serializer
 

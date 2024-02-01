@@ -3,7 +3,8 @@
 from inspect import getmembers
 from inspect import isclass
 from types import ModuleType
-from typing import Any, Callable
+from typing import Any
+from typing import Callable
 
 
 def is_class_wrapper(func: Callable) -> Callable:

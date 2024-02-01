@@ -63,9 +63,7 @@ class MessageMetaClass(type):
         * Set key
         """
         if key == "type":
-            raise TypeError(
-                "Attempted to overwrite protected field 'type'."
-            )
+            raise TypeError("Attempted to overwrite protected field 'type'.")
         field.key = key
         if cls._all_required:
             field.required = True

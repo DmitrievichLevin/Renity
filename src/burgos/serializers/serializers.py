@@ -1,5 +1,5 @@
 """Message Serializer Sub-Classes."""
-from typing import Any
+
 from burgos.decoder import decoder as MessageDecoder
 from burgos.encoder.encoder import Encoder
 from burgos.serializers.interface import MessageSerializer

@@ -6,6 +6,7 @@ from burgos.validators.exceptions import IncorrectMessageType
 from burgos.validators.validators import MessageTypeValidator
 from burgos.validators.validators import OverflowValidator
 from burgos.validators.validators import SubFieldValidator
+
 from .constants import BOOL
 from .constants import FIXED64
 from .constants import I64

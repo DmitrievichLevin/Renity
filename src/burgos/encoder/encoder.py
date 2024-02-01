@@ -1,10 +1,14 @@
 """Encoder Module."""
 
-from math import ceil
 import typing
+from math import ceil
 from typing import Any
-from bitstring import Bits, BitStream
-from burgos.fields.interface import Field
+
+from bitstring import Bits
+from bitstring import BitStream
+
+from burgos.fields.fields import ListField
+
 from ..constants import FIELDS
 from ..constants import WIRE_TYPES
 
@@ -61,9 +65,7 @@ class Encoder:
                 _encoder = getattr(cls, wire)
 
                 # Encode field
-                record = _encoder(
-                    value, field, f"{field.wire:0b}".zfill(3)
-                )
+                record = _encoder(value, field, f"{field.wire:0b}".zfill(3))
 
                 # message_type(Used for constructing messages does not have a bit)
                 # set and continue loop
@@ -78,9 +80,7 @@ class Encoder:
                 attributes += bit
 
         result: bytes = BitStream(
-            bin=identifier
-            + f"{attributes:0b}".zfill(8)
-            + "".join(records)
+            bin=identifier + f"{attributes:0b}".zfill(8) + "".join(records)
         ).bytes
         return result
 
@@ -102,7 +102,7 @@ class Encoder:
             _value(bool)
 
         Returns:
-            Binary Protocol VARINT: Bool bit-str
+            (str): Bool bit-str
         """
         # Generate Tag
         tag = "1" + f"0{FIELDS[3]}000"
@@ -117,6 +117,7 @@ class Encoder:
 
         Args:
             value(int): integer to be encoded
+            args(list): arbitrary args
 
         Returns:
             (str): Binary String representation of integer.
@@ -139,6 +140,7 @@ class Encoder:
 
         Args:
             _value(int): integer to be encoded
+            args(list): arbitrary args
 
         Returns:
             (str): Binary String representation of signed integer.
@@ -155,6 +157,7 @@ class Encoder:
 
         Args:
             value(int): integer to be encoded
+            args(list): arbitrary args
 
         Returns:
             (str): Binary String representation of integer.
@@ -174,9 +177,7 @@ class Encoder:
         return result
 
     @classmethod
-    def _string(
-        cls, value: str, _: Any = None, wire: str = "010"
-    ) -> str:
+    def _string(cls, value: str, _: Any = None, wire: str = "010") -> str:
         """LEN: String.
 
         Args:
@@ -184,7 +185,7 @@ class Encoder:
             wire(str): wire key.
 
         Returns:
-            Binary Protocol Message for LEN: String
+            (str): result
         """
         # Generate Tag
         _tag = "1" + f"0{FIELDS[2]}{wire}"
@@ -199,9 +200,7 @@ class Encoder:
         return _tag + _length + _bits
 
     @classmethod
-    def _packed(
-        cls, values: list, field: Field, __: Any = None
-    ) -> str:
+    def _packed(cls, values: list, field: ListField, __: Any = None) -> str:
         """Packed value(list).
 
         Args:
@@ -209,7 +208,7 @@ class Encoder:
             field(ListField): iterate sub_fields in ListField
 
         Returns:
-            Packed Binary Protocol Packed List
+            (list): result
 
         Raises:
             Exception: General Exception
