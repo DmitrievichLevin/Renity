@@ -2,9 +2,9 @@
 
 from typing import Optional
 
-from burgos.decoder import decoder as MessageDecoder
-from burgos.encoder.encoder import Encoder
-from burgos.serializers.interface import MessageSerializer
+from renity.decoder import decoder as MessageDecoder
+from renity.encoder.encoder import Encoder
+from renity.serializers.interface import MessageSerializer
 
 
 class DictionarySerializer(MessageSerializer):

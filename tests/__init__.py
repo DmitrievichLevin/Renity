@@ -1,1 +1,1 @@
-"""Test suite for the Burgos package."""
+"""Test suite for the Renity package."""

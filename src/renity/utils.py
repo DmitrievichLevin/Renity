@@ -1,4 +1,4 @@
-"""Burgos Utils."""
+"""Renity Utils."""
 
 from inspect import getmembers
 from inspect import isclass

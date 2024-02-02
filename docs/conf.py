@@ -1,6 +1,6 @@
 """Sphinx configuration."""
 
-project = "burgos"
+project = "renity"
 author = "Jalin Howard"
 copyright = "2024, Jalin Howard"
 extensions = [

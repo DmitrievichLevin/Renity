@@ -1,20 +1,20 @@
 [tool.poetry]
-name = "burgos"
-version = "2.0.4"
-description = "Burgos"
+name = "renity"
+version = "2.0.5"
+description = "Renity Pure Python Protocol Buffer"
 authors = ["Jalin Howard <jhowar39@emich.edu>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/DmitrievichLevin/Burgos"
-repository = "https://github.com/DmitrievichLevin/Burgos"
-documentation = "https://Burgos.readthedocs.io"
+homepage = "https://github.com/DmitrievichLevin/Renity"
+repository = "https://github.com/DmitrievichLevin/Renity"
+documentation = "https://Renity.readthedocs.io"
 classifiers = [
     "Development Status :: 4 - Beta",
 ]
 
 
 [tool.poetry.urls]
-Changelog = "https://github.com/DmitrievichLevin/Burgos/releases"
+Changelog = "https://github.com/DmitrievichLevin/Renity/releases"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -51,7 +51,7 @@ xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
 
 [tool.poetry.scripts]
-burgos-lib = "burgos.__main__:main"
+burgos = "renity.__main__:main"
 
 [tool.coverage.paths]
 source = ["src", "*/site-packages"]
@@ -59,7 +59,7 @@ tests = ["tests", "*/tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["burgos", "tests"]
+source = ["renity", "tests"]
 
 [tool.coverage.report]
 show_missing = true

@@ -4,10 +4,10 @@
   "copyright_year": "2024",
   "development_status": "Development Status :: 4 - Beta",
   "email": "jhowar39@emich.edu",
-  "friendly_name": "Burgos",
+  "friendly_name": "Renity",
   "github_user": "DmitrievichLevin",
   "license": "MIT",
-  "package_name": "burgos",
-  "project_name": "burgos-lib",
+  "package_name": "renity",
+  "project_name": "burgos",
   "version": "2.0.1"
 }

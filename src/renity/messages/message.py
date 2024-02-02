@@ -4,8 +4,8 @@ from typing import Any
 
 from bitstring import BitStream
 
-from burgos.messages.interface import MessageMetaClass
-from burgos.serializers import Serializers as Serializer
+from renity.messages.interface import MessageMetaClass
+from renity.serializers import Serializers as Serializer
 
 
 class Message(metaclass=MessageMetaClass):

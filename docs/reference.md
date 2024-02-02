@@ -1,8 +1,8 @@
 # Reference
 
-## Burgos
+## Renity
 
 ```{eval-rst}
-.. automodule:: burgos
+.. automodule:: renity
    :members:
 ```

@@ -1,11 +1,11 @@
-"""Burgos Message(s) Unit Tests Module."""
+"""Renity Message(s) Unit Tests Module."""
 
 from typing import Type
 
 import pytest
 
-from burgos.fields import fields
-from burgos.messages.message import Message
+from renity.fields import fields
+from renity.messages.message import Message
 
 
 class TestMessage(Message):
@@ -60,7 +60,9 @@ def test_byte_serializer(
     with pytest.raises(TypeError):
         test_message_all_fields(invalid_bytes_message)
 
-    message_instance = test_message_all_fields(valid_bytes_message).message
+    message_instance = test_message_all_fields(
+        valid_bytes_message
+    ).message
 
     # Test Byte Serialization against dict
     assert len(
@@ -68,6 +70,7 @@ def test_byte_serializer(
             k: message_instance[k]
             for k in message_instance
             if k in valid_dictionary_test_message_dict
-            and message_instance[k] == valid_dictionary_test_message_dict[k]
+            and message_instance[k]
+            == valid_dictionary_test_message_dict[k]
         }
     ) == len(valid_dictionary_test_message_dict)

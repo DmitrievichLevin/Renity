@@ -1,7 +1,7 @@
 """Message Interface Meta Module."""
 
-from burgos.fields.fields import TypeField
-from burgos.fields.interface import Field
+from renity.fields.fields import TypeField
+from renity.fields.interface import Field
 
 
 class MessageMetaClass(type):
@@ -46,7 +46,7 @@ class MessageMetaClass(type):
         # Limit Message fields to 8bit
         if _length > 8:
             raise Exception(
-                "Burgos currently only supports 8 field Message Schema(s)."
+                "Renity currently only supports 8 field Message Schema(s)."
             )
 
         attrs["_fields"] = _fields
@@ -63,7 +63,9 @@ class MessageMetaClass(type):
         * Set key
         """
         if key == "type":
-            raise TypeError("Attempted to overwrite protected field 'type'.")
+            raise TypeError(
+                "Attempted to overwrite protected field 'type'."
+            )
         field.key = key
         if cls._all_required:
             field.required = True

@@ -1,18 +1,18 @@
-"""Burgos Field(s) Unit Test Module."""
+"""Renity Field(s) Unit Test Module."""
 
 from typing import Any
 from typing import Optional
 
 import pytest
 
-from burgos.constants import FIELDS
-from burgos.constants import WIRE_TYPES
-from burgos.fields import fields
-from burgos.fields.interface import Field
-from burgos.utils import modulesubclasses
-from burgos.validators.interface import Validator
-from burgos.validators.validators import IncorrectFieldType
-from burgos.validators.validators import RequiredField
+from renity.constants import FIELDS
+from renity.constants import WIRE_TYPES
+from renity.fields import fields
+from renity.fields.interface import Field
+from renity.utils import modulesubclasses
+from renity.validators.interface import Validator
+from renity.validators.validators import IncorrectFieldType
+from renity.validators.validators import RequiredField
 
 
 @pytest.fixture
@@ -23,7 +23,9 @@ def field_classes() -> Any:
 
 def fields_class_validators():
     """Get Validators Attribute From Field Subclasses."""
-    return [(k, v.validators) for k, v in modulesubclasses(fields, Field)]
+    return [
+        (k, v.validators) for k, v in modulesubclasses(fields, Field)
+    ]
 
 
 def test_field_wires(field_classes):
@@ -86,7 +88,9 @@ def test_all_fields_used_in_test_dict(
 
         # Test invalid value
         with pytest.raises(TypeError):
-            test_field.validate(invalid_dictionary_test_message_dict[name])
+            test_field.validate(
+                invalid_dictionary_test_message_dict[name]
+            )
 
     # Test valid_test_dict_length == field_subclasses_length == invalid_test_dict_length
     assert (
@@ -111,7 +115,9 @@ def test_non_list_data_type_field_sub_fields():
 
 def test_field_required_default_validators():
     """Test Required Default Validator Chain in Field."""
-    pointer: Optional[Validator] = fields.IntField(required=True).validator
+    pointer: Optional[Validator] = fields.IntField(
+        required=True
+    ).validator
     defaults = [Validator, RequiredField, IncorrectFieldType]
 
     for validator in defaults:

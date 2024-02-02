@@ -1,15 +1,15 @@
-"""Burgos Serializer(s) Unit Test Module."""
+"""Renity Serializer(s) Unit Test Module."""
 
 from typing import Any
 
 import pytest
 
-from burgos.fields import fields
-from burgos.fields.interface import Field
-from burgos.messages.message import Message
-from burgos.serializers import serializers
-from burgos.serializers.interface import MessageSerializer
-from burgos.utils import modulesubclasses
+from renity.fields import fields
+from renity.fields.interface import Field
+from renity.messages.message import Message
+from renity.serializers import serializers
+from renity.serializers.interface import MessageSerializer
+from renity.utils import modulesubclasses
 
 
 @pytest.fixture
@@ -33,7 +33,9 @@ def test_serializer_subclasses(serializer_classes):
         assert serializer.data_type
 
 
-def test_serializer_responsibility_chain(field_classes, serializer_classes):
+def test_serializer_responsibility_chain(
+    field_classes, serializer_classes
+):
     """Serializer Chain.
 
     * Verify all subclasses are chained in Serializers instance.

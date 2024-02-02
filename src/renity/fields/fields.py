@@ -1,11 +1,11 @@
-"""Burgos Built-in Fields."""
+"""Renity Built-in Fields."""
 
 from __future__ import annotations
 
-from burgos.validators.exceptions import IncorrectMessageType
-from burgos.validators.validators import MessageTypeValidator
-from burgos.validators.validators import OverflowValidator
-from burgos.validators.validators import SubFieldValidator
+from renity.validators.exceptions import IncorrectMessageType
+from renity.validators.validators import MessageTypeValidator
+from renity.validators.validators import OverflowValidator
+from renity.validators.validators import SubFieldValidator
 
 from .constants import BOOL
 from .constants import FIXED64

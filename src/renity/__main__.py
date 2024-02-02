@@ -6,8 +6,8 @@ import click
 @click.command()
 @click.version_option()
 def main() -> None:
-    """Burgos."""
+    """Renity."""
 
 
 if __name__ == "__main__":
-    main(prog_name="burgos-lib")  # pragma: no cover
+    main(prog_name="burgos")  # pragma: no cover

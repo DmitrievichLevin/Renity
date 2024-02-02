@@ -3,7 +3,7 @@
 import pytest
 from click.testing import CliRunner
 
-from burgos import __main__
+from renity import __main__
 
 
 @pytest.fixture

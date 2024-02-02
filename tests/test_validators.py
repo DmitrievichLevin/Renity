@@ -1,17 +1,17 @@
-"""Burgos Validator(s) Unit Test Module."""
+"""Renity Validator(s) Unit Test Module."""
 
 import pytest
 
-from burgos.fields.fields import FloatField
-from burgos.fields.fields import IntField
-from burgos.fields.fields import ListField
-from burgos.validators.exceptions import RequiredMessageField
-from burgos.validators.exceptions import TooManyValues
-from burgos.validators.validators import IncorrectFieldType
-from burgos.validators.validators import OverflowValidator
-from burgos.validators.validators import RequiredField
-from burgos.validators.validators import SubFieldValidator
-from burgos.validators.validators import UnorderedValidator
+from renity.fields.fields import FloatField
+from renity.fields.fields import IntField
+from renity.fields.fields import ListField
+from renity.validators.exceptions import RequiredMessageField
+from renity.validators.exceptions import TooManyValues
+from renity.validators.validators import IncorrectFieldType
+from renity.validators.validators import OverflowValidator
+from renity.validators.validators import RequiredField
+from renity.validators.validators import SubFieldValidator
+from renity.validators.validators import UnorderedValidator
 
 
 subjects = [IntField(), IntField(default=12)]
