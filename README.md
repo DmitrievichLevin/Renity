@@ -78,7 +78,7 @@ To learn more, see the [Contributor Guide].
 
 ## License
 
-Distributed under the terms of the [MIT license][license],
+Distributed under the terms of the [Apache license][license],
 _Renity_ is free and open source software.
 
 ## Issues
@@ -97,3 +97,4 @@ please [file an issue] along with a detailed description.
 [license]: https://github.com/DmitrievichLevin/Renity/blob/main/LICENSE
 [contributor guide]: https://github.com/DmitrievichLevin/Renity/blob/main/CONTRIBUTING.md
 [command-line reference]: https://Renity.readthedocs.io/en/latest/usage.html
+[apache license]: https://opensource.org/license/apache-2-0/

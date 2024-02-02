@@ -1,7 +1,7 @@
 # Contributor Guide
 
 Thank you for your interest in improving this project.
-This project is open-source under the [MIT license] and
+This project is open-source under the [Apache license] and
 welcomes contributions in the form of bug reports, feature requests, and pull requests.
 
 Here is a list of important resources for contributors:
@@ -11,7 +11,7 @@ Here is a list of important resources for contributors:
 - [Issue Tracker]
 - [Code of Conduct]
 
-[mit license]: https://opensource.org/licenses/MIT
+[apache license]: https://opensource.org/license/apache-2-0/
 [source code]: https://github.com/DmitrievichLevin/Renity
 [documentation]: https://Renity.readthedocs.io/
 [issue tracker]: https://github.com/DmitrievichLevin/Renity/issues
