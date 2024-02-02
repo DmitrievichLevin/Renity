@@ -22,6 +22,7 @@ click = ">=8.0.1"
 bitstring = ">=4.1.4"
 freezegun = "^1.4.0"
 typeguard = "^4.1.5"
+sphinx = "5.0"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"
