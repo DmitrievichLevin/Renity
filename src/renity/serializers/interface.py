@@ -72,7 +72,18 @@ class MessageSerializer(ABC):
             # Check Default
             _field_default = f.default
 
-            value = _key_value or _bit_value or _field_default
+            value = next(
+                (
+                    item
+                    for item in [
+                        _key_value,
+                        _bit_value,
+                        _field_default,
+                    ]
+                    if item is not None
+                ),
+                None,
+            )
 
             if value:
                 f.validate(value)
