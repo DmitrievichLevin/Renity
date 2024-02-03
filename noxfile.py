@@ -164,6 +164,19 @@ def mypy(session: Session) -> None:
         )
 
 
+@nox.session(python=python_versions)
+def debug(session):
+    """Development tests."""
+    session.install(".")
+    session.install("coverage[toml]", "pytest", "pygments")
+
+    session.run(
+        "pytest",
+        "tests/test_debug.py",
+        *session.posargs,
+    )
+
+
 @session(python=python_versions)
 def tests(session: Session) -> None:
     """Run the test suite."""

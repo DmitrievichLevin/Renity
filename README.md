@@ -21,45 +21,9 @@
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
-There are many ways to optimize data transimission over the wire, but one of
-the biggest impacts can be made from simply not sending data you don't need.
-Renity provides an Interface for rapidly defining the serialization format for
-Network Traffic solely in Python. Using Schema's that closely resemble an
-Object Relational Mapping(ORM) we are able to generate simple class definitions
-that contain fields and methods to serlialze/parse to and from raw bytes.
+**Renity** is an [Open Source] Python Object-Binary-Mapper(OBM) _Binary Protocol Buffer_ that provides a way to rapidly define the de/serialization format of packets.
 
-## Advantages
-
-- Extendable
-- Backward Compatible Schema(s)
-- Fast Parsing
-- strict enforcement at the application level(optional)
-- Optimize size of transmissions
-
-## Example
-
-```
-    class CustomMessage(Message):
-        hello=StringField(default="World")
-        sentence=ListField(StringField(required=True),IntField())
-
-    example = CustomMessage({"sentence": ["Number of Apples:", 2]})
-
-    print(example.message)
-
-    Output:
-        {"hello": "World", "sentence": ["Number of Apples:", 2]}
-```
-
-## Features
-
-- TODO
-
-## Requirements
-
-- TODO
-
-## Installation
+## Installation 🔧
 
 You can install _Renity_ via [pip] from [PyPI]:
 
@@ -67,14 +31,89 @@ You can install _Renity_ via [pip] from [PyPI]:
 $ pip install renity
 ```
 
+## ✨ Features
+
+- Improved throughput & reduced latency by reducing the data size transferred over the network
+- Serialization & Deserialization
+- Efficiency Compared to other formats like JSON & XML
+- Strict schema definition(s) for messages
+- Backward Compatible Schema(s)
+- Development effort is reduced with an easy-to-use interface that creates a _Serialization Format_ from an Object Model.
+
+## Example 📏
+
+```python
+import requests
+from rentity import Message, StringField, IntField
+
+class CustomMessage(Message):
+        hello=StringField(default="World")
+        sentence=ListField(StringField(required=True),IntField())
+
+# Create a message
+>>> example = CustomMessage({"sentence": ["Number of Apples:", 2]})
+
+# Deserialized Message
+>>> example.message
+{"type": "CustomMessage", "hello": "World", "sentence": ["Number of Apples:", 2]}
+
+# Serialized Message
+>>> example.bytes
+b"\x97\x88\rCustomMessage\x03\x92\x88\x05World\x8a\x88\x16\x92\x88\x11Number of Apples:\x88\x02"
+
+# Post Serialized Message
+>>> requests.post(url='http://example.com/message',
+...                data=example.bytes,
+...                headers={'Content-Type': 'application/octet-stream'})
+...
+
+# GET Example
+>>> res = requests.get('http://example.com/message')
+>>> response = CustomMessage(res.content)
+>>> response.message
+{"type": "CustomMessage", "hello": "World", "sentence": ["Number of Apples:", 2]}
+```
+
+## 🔬 Tests
+
+It is recommended to set up Python 3.8, 3.9, 3.10 using [pyenv].
+
+```shell
+    # Install Poetry
+    $ pip install poetry
+
+    # Install Nox
+    $ pip install nox
+
+    # Install nox-poetry
+    $ pip install nox-poetry
+
+    # Install dependencies
+    $ poetry install
+
+    # Run Nox tests sessions
+    $ nox --session
+
+
+```
+
+## Contributing 🧠
+
+We welcome contributions of all types: from fixing typos to bug fixes to new features. For further questions about any of the below, please refer to the [Contributor Guide].
+**Reach out**!
+We encourage all contributors to reach out for work reference's. We're here to help and are available for any inquiries regarding our contributors!
+
+## 🎓 Interactive Practice
+
+Keep practicing so that your coding skills don't get rusty.
+
+- ![Udemy](https://img.shields.io/badge/Udemy-A435F0?style=for-the-badge&logo=Udemy&logoColor=white)
+- ![FreeCodeCamp](https://img.shields.io/badge/Freecodecamp-%23123.svg?&style=for-the-badge&logo=freecodecamp&logoColor=green)
+- ![LeetCode](https://img.shields.io/badge/LeetCode-000000?style=for-the-badge&logo=LeetCode&logoColor=#d16c06)
+
 ## Usage
 
 Please see the [Command-line Reference] for details.
-
-## Contributing
-
-Contributions are very welcome.
-To learn more, see the [Contributor Guide].
 
 ## License
 
@@ -88,6 +127,8 @@ please [file an issue] along with a detailed description.
 
 ## Credits
 
+![Google](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)![Godot Engine](https://img.shields.io/badge/GODOT-%23FFFFFF.svg?style=for-the-badge&logo=godot-engine)![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white)![Steam](https://img.shields.io/badge/steam-%23000000.svg?style=for-the-badge&logo=steam&logoColor=white)
+
 [pypi]: https://pypi.org/
 [file an issue]: https://github.com/DmitrievichLevin/Renity/issues
 [pip]: https://pip.pypa.io/
@@ -98,3 +139,5 @@ please [file an issue] along with a detailed description.
 [contributor guide]: https://github.com/DmitrievichLevin/Renity/blob/main/CONTRIBUTING.md
 [command-line reference]: https://Renity.readthedocs.io/en/latest/usage.html
 [apache license]: https://opensource.org/license/apache-2-0/
+[open source]: https://opensource.org/license/apache-2-0/
+[pyenv]: https://github.com/pyenv/pyenv

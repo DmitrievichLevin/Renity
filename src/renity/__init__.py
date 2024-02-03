@@ -1,18 +1,21 @@
 """Renity Protocol Buffer.
 
-There are many ways to optimize data transimission over the wire, but one of
-the biggest impacts can be made from simply not sending data you don't need.
-Renity provides an Interface for rapidly defining the serialization format for
-Network Traffic solely in Python. Using Schema's that closely resemble an
-Object Relational Mapping(ORM) we are able to generate simple class definitions
-that contain fields and methods to serlialze/parse to and from raw bytes.
+Renity is an [Open Source] Python Object-Binary-Mapper(OBM)
+Binary Protocol Buffer that provides a way to rapidly define
+the de/serialization format of packets.
 
 Advantages:
-    · Extendable
+    · Improved throughput & reduced latency by reducing the data size       transferred over the network
+
+    · Serialization & Deserialization
+
+    · Efficiency Compared to other formats like JSON & XML
+
+    · Strict schema definition(s) for messages
+
     · Backward Compatible Schema(s)
-    · Fast Parsing
-    · strict enforcement at the application level(optional)
-    · Optimize size of transmissions
+
+    · Development effort is reduced with an easy-to-use interface that creates a Serialization Format from an Object Model.
 
 
 Example:
@@ -20,10 +23,8 @@ Example:
         hello=StringField(default="World")
         sentence=ListField(StringField(required=True),IntField())
 
-    example = CustomMessage({"sentence": ["Number of Apples:", 2]})
+    >>> example = CustomMessage({"sentence": ["Number of Apples:", 2]})
 
-    print(example.message)
-
-    Output:
-        {"hello": "World", "sentence": ["Number of Apples:", 2]}
+    >>> example.message
+    {"type": "CustomMessage", "hello": "World", "sentence": ["Number of Apples:", 2]}
 """
