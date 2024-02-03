@@ -5,7 +5,7 @@
 [![Python Version](https://img.shields.io/pypi/pyversions/Renity)][python version]
 [![License](https://img.shields.io/pypi/l/Renity)][license]
 
-[![Read the documentation at https://Renity.readthedocs.io/](https://img.shields.io/readthedocs/Renity/latest.svg?label=Read%20the%20Docs)][read the docs]
+[![Documentation Status](https://readthedocs.org/projects/renity/badge/?version=latest)][read the docs]
 [![Tests](https://github.com/DmitrievichLevin/Renity/workflows/Tests/badge.svg)][tests]
 [![Codecov](https://codecov.io/gh/DmitrievichLevin/Renity/branch/main/graph/badge.svg)][codecov]
 
