@@ -43,12 +43,15 @@ $ pip install renity
 ## Example 📏
 
 ```python
+
 import requests
 from rentity import Message, StringField, IntField
 
-class CustomMessage(Message):
-        hello=StringField(default="World")
-        sentence=ListField(StringField(required=True),IntField())
+# Define Message Schema
+>>> class CustomMessage(Message):
+...     hello=StringField(default="World")
+...     sentence=ListField(StringField(required=True),IntField())
+...
 
 # Create a message
 >>> example = CustomMessage({"sentence": ["Number of Apples:", 2]})

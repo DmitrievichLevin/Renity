@@ -62,11 +62,17 @@ class MessageSerializer(ABC):
             f, key, __, bit = field
 
             # Get value from message
-            value = (
-                _message.get(key, None)
-                if _message.get(key, None) is not None
-                else _message.get(bit, None)
-            )
+
+            # Check key
+            _key_value = _message.get(key, None)
+
+            # Check bit
+            _bit_value = _message.get(bit, None)
+
+            # Check Default
+            _field_default = f.default
+
+            value = _key_value or _bit_value or _field_default
 
             if value:
                 f.validate(value)

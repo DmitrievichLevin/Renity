@@ -31,7 +31,7 @@ class FieldElement:
     @typechecked
     def __init__(
         self,
-        field: renity.fields.interface.Field,
+        field: renity.fields.Field,
         key: str,
         value: Any = None,
         bit: Optional[int] = None,

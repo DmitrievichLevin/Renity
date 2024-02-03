@@ -19,12 +19,21 @@ Advantages:
 
 
 Example:
-    class CustomMessage(Message):
-        hello=StringField(default="World")
-        sentence=ListField(StringField(required=True),IntField())
+    >>> from renity import Message, StringField, IntField, ListField
+    >>> class CustomMessage(Message):
+    ...     hello=StringField(default="World")
+    ...     sentence=ListField(StringField(required=True),IntField())
+    ...
 
     >>> example = CustomMessage({"sentence": ["Number of Apples:", 2]})
 
     >>> example.message
-    {"type": "CustomMessage", "hello": "World", "sentence": ["Number of Apples:", 2]}
+    {'type': 'CustomMessage', 'hello': 'World', 'sentence': ['Number of Apples:', 2]}
 """
+
+from .fields import fields
+from .fields.fields import *  # noqa: F401
+from .messages.message import Message  # noqa: F401
+
+
+__all__ = list(fields.__all__) + ["Message"]
