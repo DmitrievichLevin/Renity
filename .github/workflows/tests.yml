@@ -53,19 +53,15 @@ jobs:
 
           with open(os.environ["GITHUB_ENV"], mode="a") as io:
               print(f"VIRTUALENV_PIP={pip.__version__}", file=io)
-      - name: Debug CWD
-        run: |
-          echo "$PWD"
 
       - name: Install Poetry
         run: |
-          pipx install --pip-args=--constraint=Renity/.github/workflows/constraints.txt poetry
+          pip install --constraint=.github/workflows/constraints.txt poetry
           poetry --version
 
       - name: Install Nox
         run: |
-          pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
-          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
+          pip install --constraint=.github/workflows/constraints.txt nox nox-poetry
           nox --version
 
       - name: Compute pre-commit cache key
@@ -129,13 +125,12 @@ jobs:
 
       - name: Install Poetry
         run: |
-          pipx install --pip-args=--constraint=.github/workflows/constraints.txt poetry
+          pip install --constraint=.github/workflows/constraints.txt poetry
           poetry --version
 
       - name: Install Nox
         run: |
-          pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
-          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
+          pip install --constraint=.github/workflows/constraints.txt nox nox-poetry
           nox --version
 
       - name: Download coverage data
